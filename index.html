@@ -3,10 +3,69 @@
 	var url = "data:text/plain;base64," + window.location.hash.substring(1);
 	let ds = new DecompressionStream("gzip");
 
-	fetch(url)
-	.then(data => data.blob())
-	.then(b => new Response(b.stream().pipeThrough(ds)).blob())
-	.then(res => res.text())
-	.then(text => document.write(text))
+	if (window.location.hash.substring(1).length > 1) {
+		fetch(url)
+		.then(data => data.blob())
+		.then(b => new Response(b.stream().pipeThrough(ds)).blob())
+		.then(res => res.text())
+		.then(text => {
+			if (text.length > 0) {
+				document.innerHTML = '';
+			}
+			document.write(text);
+		})
+	}
+	
 
+</script>
+
+
+<title>frozenlink</title>
+
+<h2>frozenlink</h2>
+<p>Input text / html to generate a permanent link to share with friends</p>
+<textarea id=input style="width:90vw; height:60vh"></textarea>
+<br>
+<button id=linkgen onclick=linkgen()>Generate link</button>
+<p><a id=output target=_blank></a></p>
+
+<script>
+	
+
+	function bytesToBase64(bytes) {
+	  const binString = Array.from(bytes, (byte) =>
+	    String.fromCodePoint(byte),
+	  ).join("");
+	  return btoa(binString);
+	}
+
+
+	async function bytesToBase64DataUrl(bytes, type = "application/octet-stream") {
+	  return await new Promise((resolve, reject) => {
+	    const reader = Object.assign(new FileReader(), {
+	      onload: () => resolve(reader.result),
+	      onerror: () => reject(reader.error),
+	    });
+	    reader.readAsDataURL(new File([bytes], "", { type }));
+	  });
+	}
+
+
+	async function linkgen() {
+		let data = document.getElementById("input").value;
+		
+		let stream = new Blob([data],{type:'text/html'}).stream().pipeThrough(new CompressionStream("gzip"));
+
+		new Response(stream).arrayBuffer()
+		.then(rawdata => bytesToBase64DataUrl(rawdata))
+		.then(gzb64 => {
+			// console.log(gzb64);
+
+			let link = document.URL + "#" + gzb64.split("base64,")[1];
+			document.getElementById('output').href = link;
+			document.getElementById('output').innerText = link;
+		});
+			
+
+	}
 </script>
