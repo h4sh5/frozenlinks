@@ -1,0 +1,12 @@
+<script>
+
+	var url = "data:text/plain;base64," + window.location.hash.substring(1);
+	let ds = new DecompressionStream("gzip");
+
+	fetch(url)
+	.then(data => data.blob())
+	.then(b => new Response(b.stream().pipeThrough(ds)).blob())
+	.then(res => res.text())
+	.then(text => document.write(text))
+
+</script>
