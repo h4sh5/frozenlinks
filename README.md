@@ -8,11 +8,11 @@ Purely frontend, no data sent to / from any server. The data is in the URL ancho
 
 ## Hosted sites
 
-http://frozenlink.net
+https://frozenlink.net
 
 https://h4sh5.github.io/frozenlinks
 
 ## Example hello world
 
-http://frozenlink.net/#H4sIADclZ2YAA7PJMLTLSM3JyVcozy/KSbHRB/K5AFx/s00VAAAA
+https://frozenlink.net/#H4sIADclZ2YAA7PJMLTLSM3JyVcozy/KSbHRB/K5AFx/s00VAAAA
 
