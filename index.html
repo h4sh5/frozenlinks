@@ -1,3 +1,4 @@
+<!-- <script type=module src=md-block.js></script> -->
 <script>
 
 	var url = "data:text/plain;base64," + window.location.hash.substring(1);
@@ -24,7 +25,8 @@
 <p>Input text / html to generate a permanent link to share with friends</p>
 <textarea id=input style="width:90vw; height:60vh"></textarea>
 <br>
-<button onclick=linkgen()>Generate link (html)</button> <button onclick=linkgenmarkdown()>Generate link (markdown)</button>
+<button onclick=linkgen()>Generate link (html)</button>
+<!-- <button onclick=linkgenmarkdown()>Generate link (markdown)</button> -->
 <p><a id=output target=_blank></a></p>
 
 <script>
