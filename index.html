@@ -16,9 +16,7 @@
 		})
 	}
 	
-
 </script>
-
 
 <title>frozenlink</title>
 
@@ -26,7 +24,7 @@
 <p>Input text / html to generate a permanent link to share with friends</p>
 <textarea id=input style="width:90vw; height:60vh"></textarea>
 <br>
-<button id=linkgen onclick=linkgen()>Generate link</button>
+<button onclick=linkgen()>Generate link (html)</button> <button onclick=linkgenmarkdown()>Generate link (markdown)</button>
 <p><a id=output target=_blank></a></p>
 
 <script>
@@ -64,8 +62,25 @@
 			let link = document.URL + "#" + gzb64.split("base64,")[1];
 			document.getElementById('output').href = link;
 			document.getElementById('output').innerText = link;
+		});	
+	}
+
+	async function linkgenmarkdown() {
+		let data = "<md-block>" + document.getElementById("input").value + "</md-block>" + "<script type=module src=md-block.js></script"+'>';
+		
+		let stream = new Blob([data],{type:'text/html'}).stream().pipeThrough(new CompressionStream("gzip"));
+
+		new Response(stream).arrayBuffer()
+		.then(rawdata => bytesToBase64DataUrl(rawdata))
+		.then(gzb64 => {
+			// console.log(gzb64);
+
+			let link = document.URL + "#" + gzb64.split("base64,")[1];
+			document.getElementById('output').href = link;
+			document.getElementById('output').innerText = link;
 		});
 			
-
 	}
+
+
 </script>
