@@ -66,7 +66,7 @@
 	}
 
 	async function linkgenmarkdown() {
-		let data = "<md-block>" + document.getElementById("input").value + "</md-block>" + "<script type=module src=md-block.js></script"+'>';
+		let data = "<script type=module src=md-block.js></script"+'>' + "<md-block>" + document.getElementById("input").value + "</md-block>";
 		
 		let stream = new Blob([data],{type:'text/html'}).stream().pipeThrough(new CompressionStream("gzip"));
 
